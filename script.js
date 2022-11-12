@@ -21,10 +21,6 @@ class Users {
   }
 }
 
-let user1 = new Users("Karin", "kon", "KGC");
-let user2 = new Users("Oleg", "Melihin", "Ashkelon");
-let user3 = new Users("Yulia", "kon", "TLV");
-
 class bookReport {
   constructor(firstName) {
     this.firstName = firstName;
@@ -41,23 +37,18 @@ class bookReport {
           element.lastName +
           " from " +
           element.city +
-          " borrowed these books: " +
-          element.borrowedBooks
+          " borrowed these books: "
       );
+      element.borrowedBooks.forEach((book) => {
+        console.log(`${book.title} which was written by ${book.author}`);
+      });
+      console.log("");
     });
   }
   isBorrowed(bookToCheck) {
     return this.Users.some((allUsers) => allUsers.isBorrowed(bookToCheck));
   }
 }
-
-let a = new bookReport("report1");
-
-a.addNewUser(user1);
-a.addNewUser(user2);
-a.addNewUser(user3);
-console.log(a);
-a.printReport();
 
 class Book {
   constructor(title, author, canBorrow) {
@@ -66,6 +57,10 @@ class Book {
     this.canBorrow = canBorrow ? true : false;
   }
 }
+
+let user1 = new Users("Karin", "kon", "KGC");
+let user2 = new Users("Oleg", "Melihin", "Ashkelon");
+let user3 = new Users("Yulia", "kon", "TLV");
 
 let book = new Book("Tom Sawyer", "Mark Twain", "abcd");
 let book2 = new Book("Encyclopedia Britannica", "", false);
@@ -81,4 +76,24 @@ let book5 = new Book(
   true
 );
 
-user1.getBorrowedBooks().push(book2);
+user1.borrow(book);
+user1.borrow(book2);
+user1.borrow(book3);
+user1.borrow(book4);
+
+user2.borrow(book2);
+user2.borrow(book3);
+user2.borrow(book4);
+user2.borrow(book5);
+
+user3.borrow(book);
+user3.borrow(book3);
+user3.borrow(book5);
+
+let a = new bookReport("report1");
+
+a.addNewUser(user1);
+a.addNewUser(user2);
+a.addNewUser(user3);
+console.log(a);
+a.printReport();
